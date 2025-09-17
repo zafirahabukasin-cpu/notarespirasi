@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>Struktur Respirasi Haiwan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 30px;
+    }
+    h1 .text-en {
+      display: block;
+      font-size: 0.9em;
+      font-style: italic;
+      margin-top: 5px;
+    }
+    .animal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
+    .card {
+      width: 340px;
+      height: 300px;
+      perspective: 1200px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      color: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      backface-visibility: hidden;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-sizing: border-box;
+      transition: box-shadow 0.3s;
+      flex-direction: column;
+    }
+    .card.flipped .card-front, .card.flipped .card-back {
+      box-shadow: 0 0 20px 5px rgba(255,255,0,0.6); /* glow effect */
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+    .card-content {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Warna khas ikut haiwan */
+    .amfibia .card-front, .amfibia .card-back { background: #4caf50; }
+    .ikan .card-front, .ikan .card-back { background: #2196f3; }
+    .serangga .card-front, .serangga .card-back { background: #ff9800; }
+
+    /* Teks utama lebih besar dan di tengah */
+    .animal-name {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    /* Terjemahan English sama saiz dengan BM */
+    .text-en {
+      display: block;
+      font-style: italic;
+      font-size: 1.1em; /* sama saiz dengan BM */
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    Struktur Respirasi Haiwan
+    <span class="text-en">Animal Respiratory Structures</span>
+  </h1>
+
+  <div class="animal-buttons">
+    <!-- Amfibia -->
+    <div class="card amfibia" onclick="flipCard(this)">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-content">
+            <div class="animal-name">🐸 Amfibia</div>
+            <span class="text-en">Amphibians</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="card-content">
+            Kulit lembap dan peparu.  
+            Jaringan kapilari darah yang padat di bawah kulit meningkatkan kadar resapan gas antara kulit dengan kapilari darah.  
+
+            <span class="text-en">Moist skin and lungs.  
+            A dense network of blood capillaries under the skin increases the rate of gas diffusion between skin and capillaries.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ikan -->
+    <div class="card ikan" onclick="flipCard(this)">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-content">
+            <div class="animal-name">🐟 Ikan</div>
+            <span class="text-en">Fish</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="card-content">
+            Insang.  
+            Insang mempunyai filamen dan lamela yang banyak yang menghasilkan luas permukaan yang besar untuk memudahkan pertukaran gas.  
+
+            <span class="text-en">Gills.  
+            Gills have many filaments and lamellae, producing a large surface area to facilitate gas exchange.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Serangga -->
+    <div class="card serangga" onclick="flipCard(this)">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-content">
+            <div class="animal-name">🐝 Serangga</div>
+            <span class="text-en">Insects</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="card-content">
+            Sistem trakea.  
+            Sistem trakea mempunyai trakeol. Trakeol mempunyai dinding yang nipis dan lembap serta bilangan yang banyak untuk memudahkan pertukaran gas.  
+
+            <span class="text-en">Tracheal system.  
+            The tracheal system has tracheoles. Tracheoles have thin, moist walls and are numerous, facilitating gas exchange.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bunyi flip -->
+  <audio id="flipSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+
+  <script>
+    function flipCard(card) {
+      card.classList.toggle("flipped");
+
+      // Bunyi flip
+      const sound = document.getElementById("flipSound");
+      sound.currentTime = 0; // reset audio
+      sound.volume = 0.5;
+      sound.play();
+    }
+  </script>
+</body>
+</html>
